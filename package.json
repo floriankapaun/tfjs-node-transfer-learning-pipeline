@@ -1,0 +1,19 @@
+{
+  "name": "tfjs-emotion-classification",
+  "description": "Tensorflow.js Emotion Classification Training and Application",
+  "version": "1.0.0",
+  "repository": "https://github.com/floriankapaun/tfjs-emotion-classification.git",
+  "author": "Florian Kapaun",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "train": "node train.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "@tensorflow-models/knn-classifier": "^1.2.2",
+    "@tensorflow-models/mobilenet": "^2.0.4",
+    "@tensorflow/tfjs-node": "^2.8.2",
+    "fs": "^0.0.1-security"
+  }
+}
