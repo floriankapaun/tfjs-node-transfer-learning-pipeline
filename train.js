@@ -40,8 +40,8 @@ const train = async (classId, imageAbsolutePath) => {
  * @returns {String}
  */
 const stringify = (dataset) => {
-    const data = Object.entries(dataset);
-    data.map(([label, data]) => [label, Array.from(data.dataSync()), data.shape]);
+    let data = Object.entries(dataset);
+    data = data.map(([label, data]) => [label, Array.from(data.dataSync()), data.shape]);
     return JSON.stringify(data);
 }
 
