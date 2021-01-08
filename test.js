@@ -6,6 +6,8 @@ const knnClassifier = require('@tensorflow-models/knn-classifier');
 const data = require('./data/index.js');
 
 const KNN_MODEL_PATH = './knn-model.js';
+const MAX_IMAGES_PER_CATEGORY = 20;
+const FILE_FORMAT_REGEX = new RegExp('\.(jp(e?)g|png)$');
 
 const model = mobilenet.load();
 const classifier = knnClassifier.create();
@@ -84,13 +86,31 @@ const test = async () => {
     // Load the KNN classifier model
     await load(KNN_MODEL_PATH);
     // Test the KNN Classifier with examples found in data.test
-    for (const example of data.test) {
-        const prediction = await classify(example.data);
-        if (prediction.label !== example.class) {
-            // Console log wrong predictions
-            console.log('\x1b[33m', `Wrong prediction for image "${example.data}" \n Prediction: "${prediction.label}"\n Confidences: "${JSON.stringify(prediction.confidences)}" \n Reality: "${example.class}"`, '\x1b[0m');
+    let sum = 0;
+    let wrong = 0;
+    try {
+        for (const classificationClass of data.test) {
+            // Get image fileNames for each class
+            const fileNames = fs.readdirSync(classificationClass.data);
+            // For each image
+            for (let i = 0; i < MAX_IMAGES_PER_CATEGORY && i < fileNames.length ; i++) {
+                // Make sure the file format is correct/supported
+                if (FILE_FORMAT_REGEX.test(fileNames[i])) {
+                    sum += 1;
+                    // Test the KNN Classifier with that image
+                    const prediction = await classify(classificationClass.data + fileNames[i]);
+                    if (prediction.label !== classificationClass.id) {
+                        wrong += 1;
+                        // Console log wrong predictions
+                        console.log('\x1b[33m', `Wrong prediction for image "${fileNames[i]}" \n Prediction: "${prediction.label}"\n Confidences: "${JSON.stringify(prediction.confidences)}" \n Reality: "${classificationClass.id}"`, '\x1b[0m');
+                    }
+                }
+            }
         }
+    } catch (error) {
+        console.error(error);
     }
+    console.log(`🏁 FINSIHED: ${100 - (wrong/sum * 100)} % of the ${sum} predictions were correct.`);
 }
 
 test();

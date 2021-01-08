@@ -6,6 +6,8 @@ const knnClassifier = require('@tensorflow-models/knn-classifier');
 const data = require('./data/index.js');
 
 const KNN_MODEL_PATH = './knn-model.js';
+const MAX_IMAGES_PER_CATEGORY = 150;
+const FILE_FORMAT_REGEX = new RegExp('\.(jp(e?)g|png)$');
 
 const model = mobilenet.load();
 const classifier = knnClassifier.create();
@@ -70,12 +72,26 @@ const save = async (absolutePath) => {
     }
 }
 
+
 // Train the KNN Classifier with examples found in data.train
 const examples = [];
-for (const example of data.train) {
-    const promise = train(example.class, example.data);
-    // Save all promises in an array
-    examples.push(promise);
+try {
+    for (const classificationClass of data.train) {
+        // Get image fileNames for each class
+        const fileNames = fs.readdirSync(classificationClass.data);
+        // For each image
+        for (let i = 0; i < MAX_IMAGES_PER_CATEGORY && i < fileNames.length ; i++) {
+            // Make sure the file format is correct/supported
+            if (FILE_FORMAT_REGEX.test(fileNames[i])) {
+                // Train the KNN Classifier with that image
+                const promise = train(classificationClass.id, classificationClass.data + fileNames[i]);
+                // Save all promises in an array
+                examples.push(promise);
+            }
+        }
+    }
+} catch (error) {
+    console.error(error);
 }
 
 // If all examples are added and their according promises resolved
