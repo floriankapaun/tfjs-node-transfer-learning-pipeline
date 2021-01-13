@@ -1,6 +1,6 @@
-# tfjs Emotion Classification
+# tfjs-node Transfer Learning Pipeline
 
-tfjs Emotion Classification is a [transfer learning](https://en.wikipedia.org/wiki/Transfer_learning) application for classifying images according to human emotions based on [Tensorflow.js](https://github.com/tensorflow/tfjs).
+This is an example [transfer learning](https://en.wikipedia.org/wiki/Transfer_learning) application for classifying images into cats and dogs based on [Tensorflow.js](https://github.com/tensorflow/tfjs) for [Node.js](https://nodejs.org/en/).
 
 It's using a [KNN Classifier](https://github.com/tensorflow/tfjs-models/tree/master/knn-classifier) on top of [Mobilenet](https://github.com/tensorflow/tfjs-models/tree/master/mobilenet).
 
@@ -22,4 +22,4 @@ I'm using [yarn](https://classic.yarnpkg.com/en/docs/install) in my examples but
 
 ## Credits
 
-Used sample data is taken from this [repository](https://github.com/swimauger/image-classifier) by [swimaugers](https://github.com/swimauger).
+Used cats and dogs sample data is taken from this [repository](https://github.com/swimauger/image-classifier) by [swimaugers](https://github.com/swimauger).

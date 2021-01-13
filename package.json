@@ -1,8 +1,8 @@
 {
-  "name": "tfjs-emotion-classification",
-  "description": "Tensorflow.js Emotion Classification Training and Application",
+  "name": "tfjs-node-transfer-learning-pipeline",
+  "description": "Transfer Learning training and application pipeline with Tensorflow.js for Node.js",
   "version": "1.0.0",
-  "repository": "https://github.com/floriankapaun/tfjs-emotion-classification.git",
+  "repository": "https://github.com/floriankapaun/tfjs-node-transfer-learning-pipeline.git",
   "author": "Florian Kapaun",
   "license": "MIT",
   "private": false,
